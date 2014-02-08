@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Version 1.0" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This version has a list of all companies. When a company is clicked on,
+         			  one can view the company's basic information, choose to save the company
+         			  to favorite, or apply online to the company."
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="333dp"
+        android:layout_height="wrap_content"
+        android:text="What Will Be On Version 2.0?" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1. Share companies notes with friends\n
+        			  2. Link to Facebook, Twitter, LinkedIn, etc.\n
+        			  3. Synced all calendars to view all job fair week events\n
+        			  4. Reminder of application deadlines\n"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</LinearLayout>
