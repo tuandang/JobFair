@@ -1,22 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" >
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Companies' Info, Contacts, etc." />
-
-    <EditText
-        android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" >
+        android:onClick="doButton"
+        android:layout_marginTop="20px"
+        android:text="TAKE A PHOTO" />
 
-        <requestFocus />
-    </EditText>
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="340dp"
+        android:layout_height="381dp"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="20px"
+        android:src="@drawable/ic_launcher" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="365dp"
+        android:layout_height="wrap_content"
+        android:onClick="doButton2"
+        android:text="Load Image" />
 
 </LinearLayout>
