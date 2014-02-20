@@ -1,5 +1,13 @@
 package com.example.jobfairapp;
 
+import java.io.File;
+import android.widget.AdapterView.OnItemLongClickListener;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 
 import android.net.Uri;
@@ -7,11 +15,16 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,63 +33,101 @@ public class MainActivity extends ListActivity {
 	
 	Uri uri;
 	EditText editext;
+    String[] databaseArray = new String[100];
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_main);
+        
+        try {        	
+        	String destPath = "/data/data/" + getPackageName() + "/databases/MyDB";
+        	File f = new File(destPath);  
+
+			CopyDB( getBaseContext().getAssets().open("newdb"), 
+			  new FileOutputStream(destPath));
+
+		} catch (FileNotFoundException e) {			
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+        DBAdapter db = new DBAdapter (this);
+        
+
+        db.open();
+
+		db.getContact(1).getString(1);
 		
-		String[] rowNames = 
-		{"Abalta Tech", "Academia.edu", "Achieve Internet", "Ad-Juster", "Akamai Tech", 
-		"Altera Corporation", "Amazon", "Apple", "Applied Medical", "Arista Networks", 
-		 "Aruba Networks", "Autofusion", "Axure Software", "Baxter", "Beckman Coulter",
-		 "Bionomics Consulting", "Blue Sky Scientific", "Bluebeam", "Boeing", "BrightScope", 
-		 "Broadcom", "BussinessOnline", "CareFusion", "CBS Interative", "Chartboost", 
-		 "Chevron", "Cisco", "CliniComp", "Contact Singapore", "County of LA, Dept of Public Works", 
-		 "Coupa Software", "CRB", "Cubic Corp", "DR Systems", "Encore Capital Group", 
-		 "Epig Tech", "Ericsson", "Facebook", "FactSet Research Systems", "FindTheBest.com", 
-		 "Gelber Group", "General Atomics", "generationE Tech", "Google", "HP", "HGST", 
-		 "HUGHES", "Hulu", "Illumina", "Informatica", "InnovaSystems International", 
-		 "Integrity Application", "Intel", "Intellisis", "Intuit", "Kaiser Permanente",
-		 "Lab Support", "Lab126", "Laserfiche", "Leidos", "Life Tech", "Linear Tech",
-		 "LinkedIn", "LiveOps", "LSI Corporation", "MadCap Software", "Microsoft",
-		 "Mitchell International", "MobilityWare", "Moebius Solutions", "Mosys", "National Instruments", 
-		 "NOAA Commission Officer Corps", "Northrop Grumman", "Ooyala", "Opera Solutions", 
-		 "OSIsoft", "PG&E", "Panasonic Avionics", "Peace Corps", "Pearson", 
-		 "Peregrine Semiconductor", "Provide Commerce", "Raytheon", "Readyforce", "RocketFuel",
-		 "Room 5", "Salesforce.com", "Samsung", "SDSU Research Foundation", "Seagate Tech", 
-		 "Sears Holdings Corp", "Sense4Baby", "ServiceNow", "Shazam Entertainment", 
-		 "Simpson Gumpertz & Heger", "SoftHQ", "Solar Turbines", "Space and Naval Warfare Systems Center SD", 
-		 "SupplyFrame", "Tandem Diabetes Care", "TEKERP LLC", "Teradata Corp", "Thales Avionics", 
-		 "The Control Group", "The Scripps Research Institute", "Theranos", "Triage Consulting Group", 
-		 "TripAdvisor", "Turn", "Twitter", "U.S. Marine Corps", "Uber Tech", "United Tech", 
-		 "UTC Aerospace Systems", "Veeva Systems", "Verimatrix", "ViaSat", "VisiSeek", 
-		 "VMware", "Volcano Corporation", "Walt Disney Imagineering", "Webroot", "Western Digital", 
-		 "WestPac Wealth", "Workday", "XIFIN", "Yahoo!", "Yelp", "ZestFinance", "Zynga"
+	
+		String[] rowNames = {db.getContact(1).getString(1), 
+				db.getContact(2).getString(1), db.getContact(3).getString(1)};
+
 		
-		
-		
-		
-		};
+	    db.close();
+	    
+
+
 		ArrayAdapter <String> adapter = new ArrayAdapter<String>
-		(this, android.R.layout.simple_list_item_1, rowNames);
-		setListAdapter(adapter);			
+		(this, R.layout.activity_main, R.id.label, rowNames);
+		setListAdapter(adapter);		
+		final ListView list = getListView();
+	    list.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+	      @Override
+	      public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+	    	  AlertDialog.Builder alert = new AlertDialog.Builder( MainActivity.this );
+          	alert.setTitle( "Save this company?" );
+   
+          	
+          	alert.setPositiveButton("No", new DialogInterface.OnClickListener() {
+          		@Override
+          		public void onClick( DialogInterface dialog, int whichButton ) {
+
+          			
+          		}
+          	});
+          	alert.setNegativeButton( "Yes", new DialogInterface.OnClickListener() {
+          		@Override
+          		public void onClick( DialogInterface dialog, int whichButton ) {
+          	        DBAdapter db = new DBAdapter (MainActivity.this);
+
+          			db.open();
+          			
+          			String item = list.getItemAtPosition(position).toString();
+
+          	        long id = db.insertFavoriteContact(item);   
+
+          			
+          		    db.close();
+        			Toast.makeText(MainActivity.this, "company saved to Favorites", Toast.LENGTH_LONG).show();
+
+          		    
+          		    
+
+          		}
+          	}); 
+
+          	alert.show();
+	        return true;
+	      }
+	    });
+		
+
 	}
 	
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		for (int i = 0; i < 15; i++)
-		{
-			doBrowser1();
-			break;
-		}
-	
-	}
+		
+		Intent intent = new Intent (this, AboutActivity.class);
+		intent.putExtra("index", position+1);
+		//intent.putExtra ("database", databaseArray);
 
-	private void doBrowser1(){
-		Intent intent = new Intent(this, AboutActivity.class);
-		startActivity(intent);
+		startActivity (intent);
+
 	}
+	
 
 	
 
@@ -92,8 +143,10 @@ public class MainActivity extends ListActivity {
 
 		if(item.getItemId() == R.id.menu_about)
 		{
-			//Toast.makeText(this, "List of favorite companies", Toast.LENGTH_LONG).show();
+			//.makeText(this, "List of favorite companies", Toast.LENGTH_LONG).show();Toast
 			Intent intent = new Intent(this, FavoritesActivity.class);
+			intent.putExtra ("database", databaseArray);
+			Log.d ("WHAT IS DATABASE BEFORE", "" + databaseArray.length);
 			startActivity(intent);
 		}
 		
@@ -115,6 +168,18 @@ public class MainActivity extends ListActivity {
 
 		return super.onOptionsItemSelected(item);
 	}
-	
+	/* copy stream */
+    public void CopyDB(InputStream inputStream, OutputStream outputStream) 
+    throws IOException {
+        //---copy 1K bytes at a time---
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) > 0) {
+            outputStream.write(buffer, 0, length);
+        }
+
+        inputStream.close();
+        outputStream.close();
+    }
 
 }
