@@ -67,7 +67,7 @@ public class FavoritesActivity extends Activity  {
 		        }
 		        else{ 
 		        	flag = 0;
-		            Toast.makeText(this, "No contact found", Toast.LENGTH_LONG).show();
+
 		        }    
 			}    
 
@@ -80,13 +80,7 @@ public class FavoritesActivity extends Activity  {
 
     }
     
-    public void DisplayContact(Cursor c)
-    {
-        Toast.makeText(this, 
-                "id: " + c.getString(0) + "\n" +
-                "Name: " + c.getString(1) + "\n",
-                Toast.LENGTH_LONG).show();        
-    } 
+
 
 
 }
