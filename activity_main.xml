@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" 
-    android:background="@color/Black">
 
-    <ImageView
+    android:background="@color/Black">
+     
+    <!-- Single ListItem -->
+        <ImageView
         android:id="@+id/icon"
         android:layout_width="70px"
         android:layout_height="70px"
@@ -13,11 +15,10 @@
         android:layout_marginTop="10px"
         android:src="@drawable/ic_launcher" >
     </ImageView>
-
-
-
-    <TextView
-        android:id="@+id/label"
+     
+    <!-- Product Name -->
+  <TextView
+        android:id="@+id/product_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@+id/label"
@@ -25,14 +26,7 @@
         android:textSize="32sp"
         android:gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:textColor="@color/FloralWhite"   />
-
-
-
-</LinearLayout> 
-
-
-
-
-
+        android:textColor="@color/FloralWhite"   /> 
+ 
+</LinearLayout>
 
