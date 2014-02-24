@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent" 
+    android:background="@color/Black">
+    
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Black"
     >
 
     <LinearLayout
@@ -11,14 +17,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-        <TextView
-            android:id="@+id/TV_Location"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:text="Favorites"
-            android:textStyle="bold"
-            android:textSize="25dp"
-            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FAVORITES LIST"
+            android:background="@color/FloralWhite"
+        	android:layout_marginTop="20px"
+        	android:layout_marginBottom="20px"
+        	android:textColor="@color/Black" 
+       		android:fontFamily="sans-serif-condensed"  />
+
     </LinearLayout>
 
     <LinearLayout
@@ -31,8 +41,15 @@
             android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="320dp"
-            android:text="Large Text"
+            android:text="*"
+            android:layout_marginLeft="30px"
+        	android:layout_marginRight="10px"
+        	android:layout_marginTop="30px"
+        	android:layout_marginBottom="30px"
+        	android:fontFamily="sans-serif-light"
+        	android:textColor="@color/FloralWhite" 
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 </LinearLayout>
+</ScrollView>
