@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jobfairapp"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0"
+    android:windowSoftInputMode="stateHidden" >
 
     <uses-sdk
         android:minSdkVersion="17"
@@ -25,7 +26,7 @@
         <activity android:name="AboutActivity"></activity>
         <activity android:name="FavoritesActivity"></activity>
         <activity android:name="NotesActivity"></activity>
-        <activity android:name="VersionActivity"></activity>
+        <activity android:name="GoogleDocsActivity"></activity>
     </application>
-
+	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>
