@@ -34,16 +34,27 @@ public class NotesActivity extends Activity  {
     {
         DBAdapter db = new DBAdapter(this); 
         db.open();
-
-        if ((db.getImage (1))!=null)
+        
+        int index = 1; int flag = 1;
+        while (flag == 1)
         {	
-            Log.d ("hererree", "yeaaa0");
-          Bitmap bitmap2 = db.getImage(1);
-          Log.d ("hererree", "yeaaa1");
-          imageView.setImageBitmap (bitmap2);
-        }
+        	if ((db.getImage (index))!=null)
+        	{	
+ 
+        		Bitmap bitmap2 = db.getImage(1);
+
+        		imageView.setImageBitmap (bitmap2);
+        		index++;
+        	}
+        	else{
+        		flag = 0;
+        	}	
+        }	
+        
         db.close();
     }
+    
+
     
     private final int CAMERA_REQUEST_CODE = 1;
     public void doButton (View view)
